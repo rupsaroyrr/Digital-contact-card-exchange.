@@ -23,3 +23,6 @@ To provide a decentralized and tamper-proof platform for individuals and busines
 - **Decentralized & Secure**: Data is stored on the blockchain, ensuring security and transparency.
 - **Tamper-Proof Information**: The stored contact information cannot be altered by unauthorized users.
 
+## Contract Address
+0xFb6B7c5498e4775EDD64a33c00177637452E6f52
+
