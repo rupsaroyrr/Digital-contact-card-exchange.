@@ -1,0 +1,57 @@
+/* script.js */
+const contractAddress = "YOUR_CONTRACT_ADDRESS";
+const abi = [
+    {
+        "inputs": [
+            { "internalType": "string", "name": "_name", "type": "string" },
+            { "internalType": "string", "name": "_email", "type": "string" },
+            { "internalType": "string", "name": "_phone", "type": "string" },
+            { "internalType": "string", "name": "_company", "type": "string" },
+            { "internalType": "string", "name": "_position", "type": "string" }
+        ],
+        "name": "createContactCard",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getContactCard",
+        "outputs": [
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" },
+            { "internalType": "string", "name": "", "type": "string" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
+
+let web3;
+let contract;
+let accounts;
+
+document.getElementById("connectWallet").addEventListener("click", async () => {
+    if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        accounts = await web3.eth.getAccounts();
+        contract = new web3.eth.Contract(abi, contractAddress);
+        alert("Wallet Connected!");
+    } else {
+        alert("Please install MetaMask");
+    }
+});
+
+document.getElementById("createCard").addEventListener("click", async () => {
+    if (!contract) return alert("Connect wallet first");
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const company = document.getElementById("company").value;
+    const position = document.getElementById("position").value;
+    await contract.methods.createContactCard(name, email, phone, company, position).send({ from: accounts[0] });
+    alert("Contact Card Created!");
+});
